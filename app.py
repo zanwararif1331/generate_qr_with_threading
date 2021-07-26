@@ -5,10 +5,9 @@ import qrcode
 import string
 import random
 import time
-from threading import Thread, Semaphore
+from threading import Thread
 from flask_mysqldb import MySQL
 
-semaphore=Semaphore(0)
 app = Flask(__name__)
 PICTURES_FOLDER = 'static/img/'
 app.config['PICTURES_FOLDER'] = PICTURES_FOLDER
@@ -20,16 +19,15 @@ app.config['MYSQL_DB'] = 'db_absensi'
 mysql = MySQL(app)
 pict=None
 
-@app.route('/gen_qr', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def read():
     if request.method == 'POST':
-        qr()
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM karyawan")
+        cur.execute("SELECT id_karyawan, nama_karyawan, Hadir, Sakit, Izin, Alpha FROM karyawan")
         rv = cur.fetchall()
-        cur.close()
-        return render_template("gen_qr.html", value=rv, img=pict)
-    return render_template("gen_qr.html")
+        qr()
+        return render_template("index.html", value=rv, img=pict)
+    return render_template("index.html")
 
 def qr():
         global pict
