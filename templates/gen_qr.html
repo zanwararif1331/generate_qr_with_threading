@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+  <body>
+    <section class="hero is-success is-fullheight">
+      <div class="hero-body">
+        <div class="container">
+          <form method=POST>
+          <h1 class="title">
+            QR Code Generator
+          </h1>
+          <h2 class="subtitle">
+            Silahkan Generate Qr Code Anda!
+          </h2>
+          <input type=submit value=Generate onchange="myImage" class="btn btn-primary">
+          </form>
+          <!-- <img src="{{url_for('static', filename = '{{pict}}')}}" alt=""> -->
+          <div class="container">
+           <img id="myImage" src="{{ img }}">
+          {% if img %}
+          <script>
+            //Modify the src attribute of the image with the ID "myImage"
+              document.getElementById("myImage");
+          </script>
+          {% endif %}
+           {% if value %}
+           <table class="table" align="right">
+            <thead class="thead-dark">
+            <tr>
+             <th>ID Karyawan</th>
+             <th>Nama Karyawan</th>
+             <th>Hadir</th>
+             <th>Sakit</th>
+             <th>Izin</th>
+             <th>Alpha</th>
+            </tr>
+            </thead>
+            <tbody>
+             {% for row in value %}
+              <tr>
+               <td>{{row[0]}}</td>
+               <td>{{row[1]}}</td>
+               <td>{{row[2]}}</td>
+               <td>{{row[3]}}</td>
+               <td>{{row[4]}}</td>
+               <td>{{row[6]}}</td>
+              </tr>
+             {% endfor %}
+            </tbody>
+           </table>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
